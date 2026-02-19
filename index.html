@@ -4,133 +4,491 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Health Advising by Roy | Public & Private Health Coverage</title>
-  <meta name="description" content="Health Advising by Roy — licensed in 30+ states. Public (ACA) and private health coverage options. Text-first approach. No spam." />
+  <meta name="description" content="Health Advising by Roy — licensed in 30+ states. Public (ACA/Marketplace) and private health coverage options. Text-first approach. No spam." />
 
   <style>
-    body {font-family: Arial, sans-serif; margin:0; background:#0f172a; color:#fff;}
-    .container {max-width:1100px; margin:auto; padding:20px;}
-    h1,h2 {color:#22c55e;}
-    .btn {display:inline-block; padding:12px 18px; background:#22c55e; color:#000; font-weight:bold; border-radius:8px; text-decoration:none; margin:5px 0;}
-    .section {margin:40px 0;}
-    input,select,textarea {width:100%; padding:10px; margin:5px 0 15px; border-radius:6px; border:none;}
-    .card {background:#1e293b; padding:20px; border-radius:12px; margin:15px 0;}
-    footer {margin-top:40px; padding:20px; font-size:14px; color:#cbd5e1;}
+    :root{
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: rgba(15, 23, 42, .10);
+      --brand: #16a34a;
+      --brand2: #22c55e;
+      --soft: #ecfdf5;
+      --shadow: 0 18px 45px rgba(2, 6, 23, .10);
+      --radius: 18px;
+      --max: 1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: var(--font);
+      background:
+        radial-gradient(900px 500px at 10% 0%, rgba(34,197,94,.14), transparent 55%),
+        radial-gradient(900px 500px at 90% 0%, rgba(59,130,246,.10), transparent 55%),
+        var(--bg);
+      color: var(--text);
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 18px; }
+
+    /* Top nav */
+    header{
+      position: sticky; top:0; z-index: 50;
+      background: rgba(247,250,252,.75);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0; gap: 12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight: 900; letter-spacing: -.2px;
+    }
+    .logoDot{
+      width: 12px; height: 12px; border-radius: 999px;
+      background: linear-gradient(180deg, var(--brand2), var(--brand));
+      box-shadow: 0 0 0 6px rgba(34,197,94,.14);
+    }
+    .links{ display:flex; gap:16px; align-items:center; }
+    .links a{
+      font-size: 14px; font-weight: 800;
+      color: var(--muted);
+      padding: 8px 10px; border-radius: 12px;
+    }
+    .links a:hover{ background: rgba(15,23,42,.04); color: var(--text); }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-weight: 900;
+      transition: transform .12s ease, box-shadow .12s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(2,6,23,.08); }
+    .btn.primary{
+      background: linear-gradient(180deg, var(--brand2), var(--brand));
+      border-color: rgba(22,163,74,.35);
+      color: #05210f;
+    }
+    .btn.ghost{ background: rgba(255,255,255,.65); }
+
+    /* Hero */
+    .hero{ padding: 54px 0 14px; }
+    .grid{
+      display:grid; gap: 20px;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: stretch;
+    }
+    @media (max-width: 920px){ .grid{ grid-template-columns: 1fr; } .links{ display:none; } }
+
+    .card{
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(30px, 3.4vw, 46px);
+      letter-spacing: -1px;
+      line-height: 1.06;
+    }
+    .sub{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    .badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
+    .badge{
+      font-size: 13px; font-weight: 900;
+      color: #14532d;
+      background: var(--soft);
+      border: 1px solid rgba(22,163,74,.18);
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+
+    /* Form */
+    form{ display:grid; gap: 10px; margin-top: 10px; }
+    label{ font-size: 13px; font-weight: 900; color: var(--muted); }
+    input, select, textarea{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      outline: none;
+      font-size: 15px;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(22,163,74,.35);
+      box-shadow: 0 0 0 4px rgba(34,197,94,.12);
+    }
+    textarea{ min-height: 92px; resize: vertical; }
+    .two{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 720px){ .two{ grid-template-columns: 1fr; } }
+
+    .consent{
+      display:flex; gap: 10px; align-items:flex-start;
+      background: rgba(22,163,74,.06);
+      border: 1px dashed rgba(22,163,74,.25);
+      padding: 12px;
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+    .consent input{ width:auto; margin-top: 3px; }
+
+    /* Sections */
+    .section{ padding: 26px 0; }
+    h2{
+      margin: 0 0 12px;
+      font-size: clamp(22px, 2.2vw, 30px);
+      letter-spacing: -.5px;
+    }
+    .muted{ color: var(--muted); }
+
+    .cols3{
+      display:grid; gap: 14px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 920px){ .cols3{ grid-template-columns: 1fr; } }
+
+    .mini{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+    .icon{
+      width: 40px; height: 40px;
+      display:flex; align-items:center; justify-content:center;
+      border-radius: 14px;
+      background: rgba(34,197,94,.14);
+      border: 1px solid rgba(22,163,74,.22);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .kicker{ font-weight: 950; margin: 0 0 6px; }
+    .small{ font-size: 13px; line-height: 1.5; }
+
+    /* Meet Roy */
+    .meet{
+      display:grid; gap: 16px;
+      grid-template-columns: .9fr 1.1fr;
+      align-items:center;
+    }
+    @media (max-width: 920px){ .meet{ grid-template-columns: 1fr; } }
+
+    .avatar{
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: #fff;
+      overflow:hidden;
+      box-shadow: 0 16px 40px rgba(2,6,23,.10);
+    }
+    .avatar img{ width:100%; height:100%; object-fit: cover; display:block; }
+
+    /* FAQ accordion */
+    .faq{
+      display:grid; gap: 10px;
+    }
+    details{
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background:#fff;
+      padding: 14px 14px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight: 950;
+      color: var(--text);
+      list-style: none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    details p{ margin: 10px 0 0; color: var(--muted); line-height: 1.55; }
+
+    footer{
+      padding: 26px 0 44px;
+      border-top: 1px solid var(--line);
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 13px;
+    }
   </style>
 </head>
 
 <body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <span class="logoDot"></span>
+        <span>Health Advising by Roy</span>
+      </div>
 
-<div class="container">
+      <nav class="links" aria-label="Primary">
+        <a href="#learn">Public vs Private</a>
+        <a href="#meet">Meet Roy</a>
+        <a href="#get">Get Options</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#faq">FAQ</a>
+      </nav>
 
-<h1>Health Coverage Made Simple — Public & Private Options</h1>
-<p>Licensed in 30+ states. Get personalized coverage guidance without spam or aggressive sales calls.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn ghost" href="sms:+19416814821">Text</a>
+        <a class="btn primary" href="#get">Get Options</a>
+      </div>
+    </div>
+  </header>
 
-<a class="btn" href="#form">Get Options by Text</a>
-<a class="btn" href="https://calendly.com/ushealthroy/health-coverage-consultation" target="_blank">Schedule a Call</a>
-<a class="btn" href="tel:+19416814821">(941) 681-4821</a>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap grid">
+        <div class="card">
+          <h1>Licensed in 30+ states.<br/>Public & private health coverage — <span style="color:var(--brand);">guided, not sold.</span></h1>
+          <p class="sub">
+            Tell me what you need and I’ll text you personalized options.
+            <strong>No spam</strong>. No pressure. I never sell your information.
+          </p>
 
-<div class="section">
-<h2>Why Work With Health Advising by Roy?</h2>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+            <a class="btn primary" href="#get">✅ Get Options by Text</a>
+            <a class="btn" href="#schedule">🗓️ Schedule a Call</a>
+            <a class="btn" href="tel:+19416814821">📞 (941) 681-4821</a>
+          </div>
 
-<div class="card">
-<strong>Public & Private Access</strong><br>
-I guide clients through ACA/Marketplace and private plan options so you can compare properly.
-</div>
+          <div class="badges">
+            <span class="badge">Text-first approach</span>
+            <span class="badge">ACA / Marketplace guidance</span>
+            <span class="badge">Private options</span>
+            <span class="badge">Real advisor (not a lead site)</span>
+          </div>
 
-<div class="card">
-<strong>Text-First Approach</strong><br>
-No bombarding phone calls. I reach out by text first and move at your pace.
-</div>
+          <p class="muted small" style="margin-top:14px;">
+            You communicate directly with Roy — not a call center.
+          </p>
+        </div>
 
-<div class="card">
-<strong>Licensed in 30+ States</strong><br>
-Multi-state licensed advisor. Real guidance — not a lead website.
-</div>
-</div>
+        <!-- FORM -->
+        <div class="card" id="get">
+          <h2 style="margin-top:0;">Get options by text</h2>
+          <p class="muted small" style="margin-top:-6px;">
+            Quick form (60 seconds). I’ll text a few questions and send options that match.
+          </p>
 
-<div class="section">
-<h2>Public vs Private Coverage</h2>
+          <form action="https://formsubmit.co/ushealthroy@gmail.com" method="POST">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="New Website Lead - Health Advising by Roy">
 
-<div class="card">
-<strong>Public (ACA / Marketplace)</strong>
-<ul>
-<li>Income-based subsidies</li>
-<li>No medical underwriting</li>
-<li>Open enrollment windows</li>
-<li>Essential health benefits</li>
-</ul>
-</div>
+            <div class="two">
+              <div>
+                <label for="name">First name</label>
+                <input id="name" name="first_name" placeholder="Your name" required />
+              </div>
+              <div>
+                <label for="state">State</label>
+                <input id="state" name="state" placeholder="FL" required />
+              </div>
+            </div>
 
-<div class="card">
-<strong>Private Coverage</strong>
-<ul>
-<li>Often lower premiums for healthy applicants</li>
-<li>Flexible plan designs</li>
-<li>Year-round approvals in many cases</li>
-<li>Underwriting required</li>
-</ul>
-</div>
-</div>
+            <div class="two">
+              <div>
+                <label for="phone">Phone number</label>
+                <input id="phone" name="phone" placeholder="(###) ###-####" required />
+              </div>
+              <div>
+                <label for="type">Coverage type</label>
+                <select id="type" name="coverage_type" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>Individual</option>
+                  <option>Family</option>
+                </select>
+              </div>
+            </div>
 
-<div class="section" id="form">
-<h2>Get Personalized Options by Text</h2>
+            <div class="two">
+              <div>
+                <label for="timeline">When do you need coverage?</label>
+                <select id="timeline" name="timeline" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>ASAP</option>
+                  <option>This month</option>
+                  <option>Just researching</option>
+                </select>
+              </div>
+              <div>
+                <label for="pref">Preferred contact</label>
+                <select id="pref" name="preferred_contact" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>Text</option>
+                  <option>Call</option>
+                  <option>Email</option>
+                </select>
+              </div>
+            </div>
 
-<form action="https://formsubmit.co/ushealthroy@gmail.com" method="POST">
+            <label for="notes">Anything you want me to know? (optional)</label>
+            <textarea id="notes" name="notes" placeholder="Ex: keep my doctor, family of 4, looking for affordable premium"></textarea>
 
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_subject" value="New Website Lead - Health Advising by Roy">
+            <div class="consent">
+              <input type="checkbox" id="consent" name="sms_consent" required />
+              <label for="consent">
+                I agree to receive texts from <strong>Health Advising by Roy</strong> about coverage options.
+                Message & data rates may apply. Reply <strong>STOP</strong> to opt out.
+                <br><br>
+                <strong>No spam.</strong> Your info is never sold.
+              </label>
+            </div>
 
-<label>First Name</label>
-<input type="text" name="First Name" required>
+            <button class="btn primary" type="submit">Submit & Get Options</button>
+            <p class="muted small" style="margin:10px 0 0;">
+              Not affiliated with any government agency. Availability varies by state and carrier.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
 
-<label>State</label>
-<input type="text" name="State" required>
+    <!-- WHY -->
+    <section class="section">
+      <div class="wrap cols3">
+        <div class="mini">
+          <div class="icon">✓</div>
+          <p class="kicker">Public + private options</p>
+          <p class="muted small">I guide you through ACA/Marketplace and private options so you can compare clearly.</p>
+        </div>
+        <div class="mini">
+          <div class="icon">💬</div>
+          <p class="kicker">Text-first, no pressure</p>
+          <p class="muted small">You won’t get bombarded with calls. I text first and move at your pace.</p>
+        </div>
+        <div class="mini">
+          <div class="icon">🛡️</div>
+          <p class="kicker">Licensed in 30+ states</p>
+          <p class="muted small">Multi-state licensed advisor. Real guidance — not a lead website.</p>
+        </div>
+      </div>
+    </section>
 
-<label>Phone Number</label>
-<input type="text" name="Phone Number" required>
+    <!-- LEARN -->
+    <section class="section" id="learn">
+      <div class="wrap grid">
+        <div class="mini">
+          <h2 style="margin-top:0;">Public (ACA / Marketplace)</h2>
+          <ul class="muted small" style="line-height:1.65; margin:0; padding-left:18px;">
+            <li>Income-based subsidies may lower costs</li>
+            <li>No medical underwriting</li>
+            <li>Enrollment windows (OE / SEP)</li>
+            <li>Essential health benefits included</li>
+          </ul>
+          <p class="muted small" style="margin-top:10px;"><strong>Best for:</strong> people who qualify for subsidies or need guaranteed acceptance.</p>
+        </div>
 
-<label>Coverage Type</label>
-<select name="Coverage Type" required>
-<option value="">Select</option>
-<option>Individual</option>
-<option>Family</option>
-</select>
+        <div class="mini">
+          <h2 style="margin-top:0;">Private coverage</h2>
+          <ul class="muted small" style="line-height:1.65; margin:0; padding-left:18px;">
+            <li>Often lower premiums for healthy applicants</li>
+            <li>Flexible plan designs</li>
+            <li>Year-round approval in many cases</li>
+            <li>Underwriting approval required</li>
+          </ul>
+          <p class="muted small" style="margin-top:10px;"><strong>Best for:</strong> healthy individuals/families who don’t qualify for subsidies or want other designs.</p>
+        </div>
+      </div>
+    </section>
 
-<label>When Do You Need Coverage?</label>
-<select name="Timeline" required>
-<option value="">Select</option>
-<option>ASAP</option>
-<option>This Month</option>
-<option>Just Researching</option>
-</select>
+    <!-- MEET ROY -->
+    <section class="section" id="meet">
+      <div class="wrap meet card">
+        <div class="avatar">
+          <!-- Upload roy.jpg into the repo next to index.html -->
+          <img src="roy.jpg" alt="Roy - Health Advising by Roy" />
+        </div>
+        <div>
+          <h2 style="margin-top:0;">Meet Roy</h2>
+          <p class="muted" style="line-height:1.65;">
+            I built Health Advising by Roy because the health insurance space can feel confusing and overly aggressive.
+            My approach is simple: educate first, guide honestly, and help you choose what truly fits your situation.
+          </p>
+          <p class="muted" style="line-height:1.65;">
+            Whether it’s ACA/Marketplace or private options, I’ll explain both clearly so you can make a confident decision.
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+            <a class="btn primary" href="#get">Get Options by Text</a>
+            <a class="btn" href="sms:+19416814821">Text (941) 681-4821</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<label>Anything You Want Me To Know?</label>
-<textarea name="Notes"></textarea>
+    <!-- SCHEDULE -->
+    <section class="section" id="schedule">
+      <div class="wrap card">
+        <h2 style="margin-top:0;">Prefer to talk live?</h2>
+        <p class="muted">Schedule a quick consultation at a time that works for you.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="https://calendly.com/ushealthroy/health-coverage-consultation" target="_blank" rel="noreferrer">🗓️ Open Calendly</a>
+          <a class="btn" href="tel:+19416814821">Call</a>
+          <a class="btn" href="sms:+19416814821">Text</a>
+        </div>
+      </div>
+    </section>
 
-<label>
-<input type="checkbox" required>
-I agree to receive text messages from Health Advising by Roy regarding coverage options. Message & data rates may apply. Reply STOP to opt out.
-</label>
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap">
+        <h2>FAQ</h2>
+        <div class="faq">
+          <details>
+            <summary>Will I get spam calls after submitting?</summary>
+            <p>No. You’ll communicate directly with me. I don’t sell your info, and I text first.</p>
+          </details>
+          <details>
+            <summary>Can you help with ACA and private options?</summary>
+            <p>Yes — I can guide you through both and help you compare what fits your situation best.</p>
+          </details>
+          <details>
+            <summary>How fast will you respond?</summary>
+            <p>Usually same day. If you submit after hours, I’ll follow up the next business day.</p>
+          </details>
+        </div>
+        <p class="muted small" style="margin-top:10px;">
+          Not affiliated with any government agency. Availability varies by state and carrier.
+        </p>
+      </div>
+    </section>
+  </main>
 
-<button class="btn" type="submit">Submit & Get Options</button>
-
-</form>
-</div>
-
-<div class="section">
-<h2>Licensed States</h2>
-<p>Texas, Florida, Georgia, Alabama, Mississippi, Louisiana, Arkansas, Tennessee, Kentucky, Indiana, Ohio, West Virginia, Virginia, North Carolina, South Carolina, Michigan, Illinois, Wisconsin, Iowa, Missouri, Kansas, Oklahoma, Nebraska, South Dakota, Montana, Wyoming, Colorado, Utah, Nevada.</p>
-<p style="font-size:13px;color:#cbd5e1;">Product availability varies by state and carrier. Not affiliated with any government agency.</p>
-</div>
-
-<footer>
-Health Advising by Roy<br>
-Text Friendly: (941) 681-4821<br>
-Public & Private Health Coverage Guidance<br><br>
-Not affiliated with any government agency.
-</footer>
-
-</div>
-
+  <footer>
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:8px;">
+        <span class="logoDot"></span>
+        <span>Health Advising by Roy</span>
+      </div>
+      <div>
+        Phone: <a href="tel:+19416814821" style="font-weight:950; color: var(--brand);">(941) 681-4821</a> • Text-friendly • Public & private guidance
+      </div>
+      <div style="margin-top:10px;">
+        Not affiliated with any government agency. Product availability varies by state and carrier.
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
